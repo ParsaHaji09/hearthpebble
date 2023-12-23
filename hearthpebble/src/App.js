@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  BrowserRouter as Router,
   Route,
   Routes,
   Navigate
@@ -15,6 +14,7 @@ import Home from './Components/Home'
 import Profile from './Components/Profile'
 import Battlelog from "./Components/Battlelog"
 import Navbar from "./Components/Navbar";
+import Landing from "./Components/Landing";
 
 function App() {
   const [currentForm, setCurrentForm] = useState("login");
@@ -27,17 +27,18 @@ function App() {
   return (
     <>
       <div>
-        <Router>
+        
           <Navbar />
           <Routes>
-              <Route path="/" element={<Login />} />
+              <Route path="/" element={<Landing />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/battlelog" element={<Battlelog />} />
               <Route path="*" element={<Navigate to="/"/>} />
-            </Routes>
-        </Router>
+          </Routes>
+        
       </div>
     </>
     
