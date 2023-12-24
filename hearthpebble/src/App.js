@@ -4,7 +4,7 @@ import {
   Routes,
   Navigate
 } from "react-router-dom";
-import "./index.css";
+//import "./index.css";
 import "./App.css";
 
 
@@ -30,7 +30,7 @@ function App() {
         
           <Navbar />
           <Routes>
-              <Route path="/" element={<Landing />} />
+              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/home" element={<Home />} />
