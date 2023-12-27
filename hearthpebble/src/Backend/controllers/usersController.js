@@ -20,9 +20,9 @@ const getAllUsers = asyncHandler(async(req,res) => {
 // @desc create new user
 
 const createNewUser = asyncHandler(async(req,res) => {
-    const {username, password, character, deck} = req.body
+    const {username, password} = req.body
     //confirm data
-    if(!username || !password || !Array.isArray(deck) || !deck.length || !character){
+    if(!username || !password){
         return res.status(400).json({message: 'All fields are required.'})
     }
     const duplicate = await User.findOne({username}).lean().exec()
@@ -31,7 +31,10 @@ const createNewUser = asyncHandler(async(req,res) => {
     }
 
     const hashPwd = await bcrypt.hash(password,10)
-    const userObject = {username, "password": hashPwd, character, deck}
+    const defaultCharacter = "Sir Gideon Stormblade"
+    const defaultDeck = ["Gideon's Valor", 'Stormbreaker', 'Knight\'s Rally', 'Gideon\'s Shieldwall', 'Thunderstrike']
+
+    const userObject = {username, "password": hashPwd, "character": defaultCharacter, "deck": defaultDeck}
     const user = await User.create(userObject)
     if (user) {
         res.status(201).json({message: `New user ${username} created`})
