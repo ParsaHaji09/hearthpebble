@@ -6,6 +6,15 @@
     box-sizing: border-box;
 }
 
+h1 {
+    line-height: 1;
+    padding-top: 50px;
+}
+
+div {
+    place-content: 'right';
+}
+
 html {
     font-family: 'Share Tech Mono', monospace;
     font-size: 2.5rem;
@@ -28,4 +37,16 @@ body {
     position: fixed;
     z-index: 1000;
     justify-content: space-between;
+    display: flex;
 }
+.links {
+    display: flex;
+  }
+  
+  .links a {
+    margin-right: 20px; /* Adjust the margin as needed */
+  }
+  
+  .logout {
+    margin-left: auto; /* Move the logout button to the right */
+  }
