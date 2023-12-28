@@ -74,7 +74,7 @@ const Button = ({ imageSrc, onClick, isActive }) => {
 
     return (
       <div>
-        <Link to="/profile">
+        <Link to="/editdeck">
           <button className="Edit Deck" onClick={editDeck} style={{ marginLeft: '140px',
                                                                     padding: '20px',
                                                                     placeContent: 'center',
