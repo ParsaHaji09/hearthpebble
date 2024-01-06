@@ -1,10 +1,10 @@
 export const CHARACTERS = {
-    a1: "Sir Gideon Stormblade",
-    a2: "Aldric Ironheart",
-    a3: "Isolde Frostbloom",
-    a4: "Elara Moonshadow",
-    a5: "Cedric Stonehammer",
-    a6: "Selene Starwhisper",
-    a7: "Darius Swiftarrow",
-    a8: "Kaelan Flameheart"
-}
+    a0: "Sir Gideon Stormblade",
+    a1: "Aldric Ironheart",
+    a2: "Isolde Frostbloom",
+    a3: "Elara Moonshadow",
+    a4: "Cedric Stonehammer",
+    a5: "Selene Starwhisper",
+    a6: "Darius Swiftarrow",
+    a7: "Kaelan Flameheart"
+};

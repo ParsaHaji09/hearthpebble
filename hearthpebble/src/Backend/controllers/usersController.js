@@ -1,23 +1,7 @@
 const User = require('../models/UserModel')
-
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
-
-// @desc get all users
-
-// @route Get /users
-
-// @access Private
-
-const getAllUsers = asyncHandler(async(req,res) => {
-    const users = await User.find().select('-password').lean()
-    if(!users?.length) {
-        return res.status(400).json({message: 'No users found.'})
-    }
-    res.json(users)
-})
-
-// @desc create new user
+const generateToken = require('../util/generateToken')
 
 const createNewUser = asyncHandler(async(req,res) => {
     const {username, password} = req.body
@@ -33,8 +17,9 @@ const createNewUser = asyncHandler(async(req,res) => {
     const hashPwd = await bcrypt.hash(password,10)
     const defaultCharacter = "Sir Gideon Stormblade"
     const defaultDeck = ["Gideon's Valor", 'Stormbreaker', 'Knight\'s Rally', 'Gideon\'s Shieldwall', 'Thunderstrike']
+    const defaultLog = []
 
-    const userObject = {username, "password": hashPwd, "character": defaultCharacter, "deck": defaultDeck}
+    const userObject = {username, "password": hashPwd, "character": defaultCharacter, "deck": defaultDeck, "logBattles": defaultLog}  // token and _id?
     const user = await User.create(userObject)
     if (user) {
         res.status(201).json({message: `New user ${username} created`})
@@ -43,33 +28,57 @@ const createNewUser = asyncHandler(async(req,res) => {
     }
 })
 
-// @desc update a user
+const verifyUser = asyncHandler(async(req,res) => {
+    const {username, password} = req.body
+    const user = await User.findOne({username})
+    if(user && (await user.matchPassword(password))){
+        res.json({
+            _id: user._id,
+            username: user.username,
+            deck: user.deck,
+            character: user.character,
+            logBattles: user.logBattles
+        })
+    } else{
+        res.status(400);
+        throw new Error("invalid username or password")
+    }
+})
+
+const getAllUsers = asyncHandler(async(req,res) => {
+    const users = await User.find().select('-password').lean()
+    if(!users?.length) {
+        return res.status(400).json({message: 'No users found.'})
+    }
+    res.json(users)
+})
+
+const getUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+        res.json(user);
+    } else {
+        res.status(404).json({ message: "User not found." });
+    }
+});
 
 const updateUser = asyncHandler(async(req,res) => {
-    const {id, username, password, character, deck} = req.body
+    const {id, username, character, deck} = req.body
     //confirm data
-    if(!id || !username || !password || !Array.isArray(deck) || !deck.length || !character){
+    if(!id || !username || !Array.isArray(deck) || !deck.length || !character){
         return res.status(400).json({message: 'All fields are required.'})
     }
-    const user = await User.findByID(id).exec()
+    const user = await User.findById(req.params.id);
+    console.log(user)
     if (!user) {
         return res.status(400).json({message: 'No user found.'})
     }
-    const duplicate = await User.findOne({username}).lean().exec()
-    if (duplicate && duplicate?._id.toString() !== id){
-        return res.status(409).json({message: 'Duplicate username'})
-    }
-    user.username = username
     user.character = character
     user.deck = deck
-    if(password) {
-        user.password = await bcrypt.hash(password, 10)
-    }
     const updatedUser = await user.save()
-    res.json({message: `${updatedUser.username} is updated`})
+    res.json(updatedUser)
 })
-
-// @desc delete a user
 
 const deleteUser = asyncHandler(async(req,res) => {
     const {id} = req.body
@@ -90,5 +99,8 @@ module.exports = {
     getAllUsers,
     createNewUser,
     updateUser,
+    getUser,
+    getAllUsers,
+    verifyUser,
     deleteUser
 }
