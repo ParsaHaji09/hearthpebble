@@ -1,22 +1,26 @@
 const jwt = require('jsonwebtoken')
-const verifyJWT = (req,res,next) => {
-    const authHeader = req.headers.authorization || req.headers.Authorization
+const User = require("../models/UserModel")
+const asyncHandler = require("express-async-handler")
 
-    if(!authHeader?.startsWith('Bearer ')){
-        return res.status(401).json({message: 'unauthroized'})
-    }
-    const token = authHeader.split(' ') [1]
-
-    jwt.verify(
-        token,
-        process.env.ACCESS_TOKEN_SECRET,
-        (err, decoded) => {
-            if (err) return res.status(403).json({ message: 'Forbidden' })
-            req.user = decoded.UserInfo.username
-            req.character = decoded.UserInfo.character
-            req.deck = decoded.UserInfo.deck
+const verifyJWT = asyncHandler( async (req,res,next) => {
+    const authHeader = req.headers.authorization
+    let token
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        console.log('here')
+        try{
+            token = authHeader.split(' ') [1]
+            const decodeToken = jwt.verify(token, process.env.JWT_SECRET)
+            req.user = await User.findById(decodeToken.id).select("-password")
             next()
         }
-    )
-}
+        catch (error){
+            res.status(401);
+            throw new Error("Not authorized, token mismatch 1.");
+        }
+    }
+    if(!token) {
+        res.status(401);
+        throw new Error("Not authorized, token mismatch 2.");
+    }
+})
 module.exports = verifyJWT

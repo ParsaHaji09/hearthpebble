@@ -6,9 +6,21 @@
     box-sizing: border-box;
 }
 
-h1 {
+.home-body, .landing-body, .login-body, .register-body, .edituser-body, .editdeck-body {
     line-height: 1;
     padding-top: 50px;
+}
+
+.landing-body{
+    display: flex;
+}
+
+.text a {
+    display: block;
+}
+
+.right-side {
+     float: right;
 }
 
 div {

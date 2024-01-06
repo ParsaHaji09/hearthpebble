@@ -1,117 +1,50 @@
-import { useState, useEffect } from "react"
-import { useAddNewUserMutation } from "../users/usersAPISlice"
-import { useNavigate } from "react-router-dom"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave } from "@fortawesome/free-solid-svg-icons"
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { register } from '../actions/reduxActions';
+import './Home.css'
 
 
-const USER_REGEX = /^[A-z]{3,20}$/
-const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/
+const Register = (props) => {
+  
+  const [password, setPassword] = useState('');
+  const [username, setUserName] = useState('');
 
-const RegisterForm = () => {
-
-    const [addNewUser, {
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    }] = useAddNewUserMutation()
-
-    const navigate = useNavigate()
-
-    const [username, setUsername] = useState('')
-    const [validUsername, setValidUsername] = useState(false)
-    const [password, setPassword] = useState('')
-    const [validPassword, setValidPassword] = useState(false)
-
-    useEffect(() => {
-        setValidUsername(USER_REGEX.test(username))
-    }, [username])
-
-    useEffect(() => {
-        setValidPassword(PWD_REGEX.test(password))
-    }, [password])
-
-    useEffect(() => {
-        if (isSuccess) {
-            setUsername('')
-            setPassword('')
-            navigate('/login')
-        }
-    }, [isSuccess, navigate])
-
-    const onUsernameChanged = e => setUsername(e.target.value)
-    const onPasswordChanged = e => setPassword(e.target.value)
+  const dispatch = useDispatch();
 
 
-    const canSave = [validUsername, validPassword].every(Boolean) && !isLoading
+  const navigate = useNavigate();
+  const handleClick = () => {
+    console.log("Switched to Login");
+    navigate ('/');
+  }
 
-    const onSaveUserClicked = async (e) => {
-        e.preventDefault()
-        if (canSave) {
-            await addNewUser({ username, password })
-        }
-    }
-
-    // const options = Object.values(ROLES).map(role => {
-    //     return (
-    //         <option
-    //             key={role}
-    //             value={role}
-
-    //         > {role}</option >
-    //     )
-    // })
-
-    const errClass = isError ? "errmsg" : "offscreen"
-    const validUserClass = !validUsername ? 'form__input--incomplete' : ''
-    const validPwdClass = !validPassword ? 'form__input--incomplete' : ''
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     
+    console.log(username, password);
+    console.log('Register component submitted with username:', username);
+    dispatch(register(username, password));
+    navigate('/home')
+  }
 
-    return (
-        <>
-            <p className={errClass}>{error?.data?.message}</p>
+  return (
+    <div className = "register-body">
+    <div className="auth-form-container">
+    <form className="login-form" onSubmit={handleSubmit}>
 
-            <form className="form" onSubmit={onSaveUserClicked}>
-                <div className="form__title-row">
-                    <h2>New User</h2>
-                    <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
-                            disabled={!canSave}
-                        >
-                            <FontAwesomeIcon icon={faSave} />
-                        </button>
-                    </div>
-                </div>
-                <label className="form__label" htmlFor="username">
-                    Username: <span className="nowrap">[3-20 letters]</span></label>
-                <input
-                    className={`form__input ${validUserClass}`}
-                    id="username"
-                    name="username"
-                    type="text"
-                    autoComplete="off"
-                    value={username}
-                    onChange={onUsernameChanged}
-                />
+    <label htmlFor="username">Username</label>
+      <input value={username} onChange={(e) => setUserName(e.target.value)} username="username" id="name" placeholder="Enter here" required />
 
-                <label className="form__label" htmlFor="password">
-                    Password: <span className="nowrap">[4-12 chars incl. !@#$%]</span></label>
-                <input
-                    className={`form__input ${validPwdClass}`}
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={onPasswordChanged}
-                />
-
-                
-
-            </form>
-        </>
-    );
+    <label htmlFor ="password">Password</label>
+      <input value={password} onChange={(e) => setPassword (e.target.value)} type="password" placeholder="********" id="password" name="password"/>
+      
+    <button className="button" type="submit">Register</button>
+    </form>
+    <button className="link-btn" onClick={handleClick}> Already have an account? Log in here.</button>
+    </div>
+    </div>
+  );
 }
-export default RegisterForm
+
+export default Register;

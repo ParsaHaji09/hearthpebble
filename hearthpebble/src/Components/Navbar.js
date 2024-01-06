@@ -1,32 +1,14 @@
-import { useEffect } from "react";
-import { useSendLogoutMutation } from "./auth/authAPISlice";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { logout } from './actions/reduxActions';
 
 function Navbar() {
-    
+    const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    const [sendLogout, {
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    }] = useSendLogoutMutation()
-
-    useEffect(() => {
-        if(isSuccess) {
-            console.log("bye")
-            navigate('/')
-        }
-    }, [isSuccess, navigate])
-
-    if (isLoading) return <p>Logging Out...</p>
-    if (isError) return <p>Error: {error.data?.message}</p>
-
-    const logoutHandler = () => { 
-        sendLogout() 
+    const handleClick = () => {
+        dispatch(logout());
+        navigate('/landing')
     }
-    
     return (
         <nav className="nav">
             <a href="/home" className="sitename">
@@ -36,7 +18,7 @@ function Navbar() {
                 <a href="/home" className="home">Home</a>
                 <a href="/battlelog" className="battlelog">Battle Log</a>
                 <a href="/editdeck" className="editdeck">Edit Deck</a>
-                <button className="logout" onClick={logoutHandler}>Log Out</button>
+                <button onClick={handleClick}>Logout</button>
             </div>
         </nav>
     );
