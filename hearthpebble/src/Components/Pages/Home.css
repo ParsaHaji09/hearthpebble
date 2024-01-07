@@ -23,6 +23,10 @@
      float: right;
 }
 
+.left-side {
+    float: left;
+}
+
 div {
     place-content: 'right';
 }

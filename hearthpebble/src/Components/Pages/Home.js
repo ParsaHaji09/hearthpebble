@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom';
 import { CHARACTERS } from '../options/characters';
+import { CARDS } from '../options/cards';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const images = require.context('./HomeAssets', true);
-const imageList = images.keys().map(image => images(image));
+const imagesCharacter = require.context('./HomeAssets/CharacterPics', true)
+const imageList = imagesCharacter.keys().map(image => imagesCharacter(image))
+
+const imagesCards = require.context('./HomeAssets/CardPics', true)
+const imageList2 = imagesCards.keys().map(image => imagesCards(image))
 
 
 const Button = ({ imageSrc, onClick, isActive }) => {
@@ -53,14 +57,24 @@ const VerticalButtonList = ({ onButtonClick, activeButtonIndex }) => {
   );
 };
   
-const Grid = () => {
-  const imageSources = [
-    imageList[0], imageList[1], imageList[2],
-    imageList[3], imageList[4], imageList[5],
-    imageList[6], imageList[7], imageList[0],
-    imageList[1], imageList[2], imageList[3],
-    imageList[4], imageList[5], imageList[6],
-  ];
+const Grid = (obj) => {
+  
+  const [userCards, setUserCards] = useState([]);
+
+  useEffect(() => {
+    function findKeysByValues(valueList) {
+      return Object.keys(CARDS).filter(key => valueList.includes(CARDS[key]));
+    }
+    function convertStringsToInts(stringList) {
+      return stringList.map(str => parseInt(str.slice(1)));
+    }
+    const correspondingKeys = findKeysByValues(obj.deck)
+    const correspondingIndexes = convertStringsToInts(correspondingKeys)
+    console.log(correspondingIndexes)
+    const correspondingCards = correspondingIndexes.map(index => imageList2[index])
+    
+    setUserCards(correspondingCards)
+  }, [obj.deck])
 
     return (
       <div>
@@ -69,7 +83,7 @@ const Grid = () => {
             <button className="Edit Deck" onClick={editDeck} style={{ padding: '20px', placeContent: 'center', width: '320px' }}>Edit Deck</button>
           </Link>
           <div className='Grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(5, 100px)', gap: '10px' }}>
-                {imageSources.map((source, index) => (
+                {userCards.map((source, index) => (
                   <img key={index} src={source} alt={`Image ${index + 1}`}style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ))}
           </div>
@@ -88,7 +102,6 @@ const Home = () => {
 
     useEffect(() => {
       const prevData = localStorage.getItem("saveData");
-      console.log(prevData)
       if (!prevData) {
         navigate('/login');
       } else {
@@ -114,7 +127,6 @@ const Home = () => {
     const handleButtonClick = async(index) => { 
       setActiveButtonIndex(index); 
       let characterIndex = "a" + index
-      console.log(CHARACTERS[characterIndex])
       try {
         const response = await axios.put(`http://localhost:5000/api/users/${userData._id}`,{
           "id": userData._id,
@@ -141,7 +153,7 @@ const Home = () => {
                 <img src={imageList[activeButtonIndex]} style={{ marginLeft: '0px', paddingLeft: '50px', paddingRight: '50px', width: '60vw', placeContent: 'left', height: '800px' }}/>
                 <div>
                   <p>{userData.character}</p>
-                  <Grid/>
+                  <Grid deck = {userData.deck}/>
                 </div>
               </div>
             )}
