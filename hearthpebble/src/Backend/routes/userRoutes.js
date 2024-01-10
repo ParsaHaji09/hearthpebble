@@ -3,12 +3,18 @@ const router = express.Router()
 const usersController = require('../controllers/usersController')
 const verifyJWT = require('../middleware/verifyJWT')
 
-router.use(verifyJWT)
+//router.use(verifyJWT)
 
-router.route('/')
-    .get(usersController.getAllUsers)
-    .post(usersController.createNewUser)
-    .patch(usersController.updateUser)
-    .delete(usersController.deleteUser)
+// register
+router.route('/').post(usersController.createNewUser);
+
+// login
+router.route('/login').post(usersController.verifyUser);
+
+// retrieve users
+router.route('/all-users').get(usersController.getAllUsers);
+
+router.route('/:id').get(usersController.getUser)
+                    .put(usersController.updateUser);
 
 module.exports = router
