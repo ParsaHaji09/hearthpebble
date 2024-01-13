@@ -18,7 +18,11 @@ import Landing from "./Components/Pages/Landing";
 import EditDeck from "./Components/Pages/EditDeck";
 
 
+import io from 'socket.io-client';
+const socket = io.connect("http://localhost:3001");
+
 function App() {
+
   const [currentForm, setCurrentForm] = useState("login");
   
   useEffect(() => {
