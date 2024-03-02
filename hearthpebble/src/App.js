@@ -4,7 +4,6 @@ import {
   Routes,
   Navigate
 } from "react-router-dom";
-//import "./index.css";
 import "./App.css";
 
 
@@ -16,10 +15,7 @@ import Battlelog from "./Components/Pages/Battlelog"
 import Navbar from "./Components/Navbar";
 import Landing from "./Components/Pages/Landing";
 import EditDeck from "./Components/Pages/EditDeck";
-
-
-import io from 'socket.io-client';
-const socket = io.connect("http://localhost:3001");
+import Battlefield from "./Components/Pages/Battlefield";
 
 function App() {
 
@@ -43,7 +39,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/battlelog" element={<Battlelog />} />
-              
+              <Route path="/battlefield" element={<Battlefield />} />
               
               <Route path="*" element={<Navigate to="/"/>} />
           </Routes>
