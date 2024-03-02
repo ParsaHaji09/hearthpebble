@@ -31,6 +31,19 @@ app.use('/api/users', userRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
+const io = require('socket.io') (4000, {
+  cors: {
+    origin: ['http://localhost:3000']
+  }
+})
+io.on('connection', socket => {
+  console.log(`user is here: ${socket.id}`)
+
+  socket.on("play-card", cardname => {
+    console.log(cardname)
+    io.emit("receive-card", cardname)
+  })
+})
 
 
 app.listen(PORT, console.log(`Server started on PORT ${PORT}`))

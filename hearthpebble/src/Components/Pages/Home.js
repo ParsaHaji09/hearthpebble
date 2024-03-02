@@ -144,6 +144,9 @@ const Home = () => {
       }
     };
 
+    const handleClick = () => {
+      navigate('/battlefield')
+    }
     return (
         <div>
           {loading ? (
@@ -156,6 +159,7 @@ const Home = () => {
                 <div>
                   <p>{userData.character}</p>
                   <Grid deck = {userData.deck}/>
+                  <button onClick={handleClick}>Play Battle</button>
                 </div>
               </div>
             )}

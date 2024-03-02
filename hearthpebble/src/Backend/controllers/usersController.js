@@ -14,7 +14,8 @@ const createNewUser = asyncHandler(async(req,res) => {
         return res.status(409).json({message: 'Duplicate username'})
     }
 
-    const hashPwd = await bcrypt.hash(password,10)
+    // const hashPwd = await bcrypt.hash(password,10)
+    const hashPwd = password
     const defaultCharacter = "Sir Gideon Stormblade"
     const defaultDeck = ["Gideon's Valor", 'Stormbreaker', 'Knight\'s Rally', 'Gideon\'s Shieldwall', 'Thunderstrike']
     const defaultLog = []
