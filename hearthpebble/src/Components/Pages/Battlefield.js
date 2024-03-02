@@ -20,7 +20,7 @@ const Battlefield = () => {
 
     const generateNumbers = () => {
         let generatedNumbers = [];
-        while (generatedNumbers.length != 5) {
+        while (generatedNumbers.length < 5) {
           const randomNumber = Math.floor(Math.random() * 15) + 1;
           if (!generatedNumbers.includes(randomNumber)) {
             generatedNumbers.push(randomNumber);
