@@ -4,16 +4,20 @@ import { useState, useEffect } from 'react'
 
 const socket = io('http://localhost:4000')
 
-socket.on("receive-card", card => {
-    
-})
+
+
 
 const Battlefield = () => {
     const [cardName, setCardName] = useState("")
 
     const handlePlayCard = (updatedCard) => {
         console.log("pressed");
-        socket.emit("play-card", updatedCard);
+        socket.emit("play-card", updatedCard)
+
+        socket.on("receive-card", cardname => {
+            console.log("client " + cardname)
+            setCardName(cardname)
+        })
     };
 
     return (
