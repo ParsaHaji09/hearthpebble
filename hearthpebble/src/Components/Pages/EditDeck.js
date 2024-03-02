@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import { CARDS } from '../options/cards';
+import { CARDS2 } from '../options/cards';
 
 const imagesCards = require.context('./HomeAssets/CardPics', true)
 const imagesCardsList = imagesCards.keys().map(image => imagesCards(image))
@@ -17,20 +17,23 @@ function EditDeck() {
     const [userCards, setUserCards] = useState([]);
     const [allCards, setAllCards] = useState(imagesCardsList);
 
-    function findKeysByValues(valueList) {
-        return Object.keys(CARDS).filter(key => valueList.includes(CARDS[key]));
+    function findIndicesByValues(valueList) {
+      const indices = []
+      valueList.forEach(element => {
+        const index = CARDS2.indexOf(element)
+        if(index !== -1){
+          indices.push(index)
+        }
+      });
+      return indices;
     }
-    function convertStringsToInts(stringList) {
-        return stringList.map(str => parseInt(str.slice(1)));
-    }
-
     const getUser = async (uid) => {
         try {
             const response = await axios.get(`http://localhost:5000/api/users/${uid}`);
             // console.log(response.data); // Handle the response from the server
             setUserData(response.data);
-            const correspondingKeys = findKeysByValues(response.data.deck)
-            const correspondingIndexes = convertStringsToInts(correspondingKeys)
+            findIndicesByValues(response.data.deck)
+            const correspondingIndexes = findIndicesByValues(response.data.deck)
             const correspondingCards = correspondingIndexes.map(index => imagesCardsList[index])
             setUserCards(correspondingCards)
             setAllCards(allCards.filter(card => !correspondingCards.includes(card)))
@@ -58,18 +61,14 @@ function EditDeck() {
                 return correspondingCards.map(card => imagesCardsList.indexOf(card)).filter(index => index !== -1);
             }
           // Function to find values by keys
-            function findValuesByKeys(keyList) {
-                return keyList.map(key => CARDS[key]).filter(Boolean); // Using filter(Boolean) to remove any undefined values
+            function findValuesByIndex(indexList) {
+                return indexList.map(key => CARDS2[key]).filter(Boolean); // Using filter(Boolean) to remove any undefined values
             }
-
-            // Function to convert integers to strings with a prefix
-            function convertIntsToStrings(intList) {
-                return intList.map(int => "c" + int); // Adding "a" prefix to each integer
-            }
+          console.log(userCards)
           const indices = mapCardsToIndices(userCards)
-          const getKeys = convertIntsToStrings(indices)
-          const cardNames = findValuesByKeys(getKeys)
-
+          console.log(indices)
+          const cardNames = findValuesByIndex(indices)
+          console.log(cardNames)
           try {
             const response = await axios.put(`http://localhost:5000/api/users/${userData._id}`,{
               "id": userData._id,

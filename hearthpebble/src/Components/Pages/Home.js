@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom';
 import { CHARACTERS } from '../options/characters';
-import { CARDS } from '../options/cards';
+import { CARDS2 } from '../options/cards';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const imagesCharacter = require.context('./HomeAssets/CharacterPics', true)
-const imageList = imagesCharacter.keys().map(image => imagesCharacter(image))
+const imageCharacterList = imagesCharacter.keys().map(image => imagesCharacter(image))
 
 const imagesCards = require.context('./HomeAssets/CardPics', true)
-const imageList2 = imagesCards.keys().map(image => imagesCards(image))
+const imageCardlist = imagesCards.keys().map(image => imagesCards(image))
 
 
 const Button = ({ imageSrc, onClick, isActive }) => {
@@ -32,14 +32,13 @@ const editDeck = () => {
 
 const VerticalButtonList = ({ onButtonClick, activeButtonIndex }) => {
   const buttons = [
-      { label: 'Button 1', imageSrc: imageList[0] },
-      { label: 'Button 2', imageSrc: imageList[1] },
-      { label: 'Button 3', imageSrc: imageList[2] },
-      { label: 'Button 4', imageSrc: imageList[3] },
-      { label: 'Button 5', imageSrc: imageList[4] },
-      { label: 'Button 6', imageSrc: imageList[5] },
-      { label: 'Button 7', imageSrc: imageList[6] },
-      { label: 'Button 8', imageSrc: imageList[7] },];
+      { label: 'Button 1', imageSrc: imageCharacterList[0] },
+      { label: 'Button 2', imageSrc: imageCharacterList[1] },
+      { label: 'Button 3', imageSrc: imageCharacterList[2] },
+      { label: 'Button 4', imageSrc: imageCharacterList[3] },
+      { label: 'Button 5', imageSrc: imageCharacterList[4] },
+      { label: 'Button 6', imageSrc: imageCharacterList[5] },
+      ];
 
   return (
     <div style={{display: 'flex'}}>
@@ -62,16 +61,19 @@ const Grid = (obj) => {
   const [userCards, setUserCards] = useState([]);
 
   useEffect(() => {
-    function findKeysByValues(valueList) {
-      return Object.keys(CARDS).filter(key => valueList.includes(CARDS[key]));
+    function findIndicesByValues(valueList) {
+      const indices = []
+      valueList.forEach(element => {
+        const index = CARDS2.indexOf(element)
+        if(index !== -1){
+          indices.push(index)
+        }
+      });
+      return indices;
     }
-    function convertStringsToInts(stringList) {
-      return stringList.map(str => parseInt(str.slice(1)));
-    }
-    const correspondingKeys = findKeysByValues(obj.deck)
-    const correspondingIndexes = convertStringsToInts(correspondingKeys)
+    const correspondingIndexes = findIndicesByValues(obj.deck)
     console.log(correspondingIndexes)
-    const correspondingCards = correspondingIndexes.map(index => imageList2[index])
+    const correspondingCards = correspondingIndexes.map(index => imageCardlist[index])
     
     setUserCards(correspondingCards)
   }, [obj.deck])
@@ -150,7 +152,7 @@ const Home = () => {
             ): (
               <div className= 'home-body' style={{ display: 'flex' }}>
                 <VerticalButtonList onButtonClick={handleButtonClick} activeButtonIndex={activeButtonIndex}/>
-                <img src={imageList[activeButtonIndex]} style={{ marginLeft: '0px', paddingLeft: '50px', paddingRight: '50px', width: '60vw', placeContent: 'left', height: '800px' }}/>
+                <img src={imageCharacterList[activeButtonIndex]} style={{ marginLeft: '0px', paddingLeft: '50px', paddingRight: '50px', width: '60vw', placeContent: 'left', height: '800px' }}/>
                 <div>
                   <p>{userData.character}</p>
                   <Grid deck = {userData.deck}/>
