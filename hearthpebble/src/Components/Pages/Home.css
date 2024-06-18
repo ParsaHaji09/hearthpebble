@@ -32,37 +32,47 @@ div {
 }
 
 html {
-    font-family: 'Share Tech Mono', monospace;
+    
     font-size: 2.5rem;
-    width: 99vw;
+
     top: 0;
     left: 0;
 }
 
 body {
-    min-height: 100vh;
-    background-color: #000;
     color: whitesmoke;
     display: grid;
     place-content: left;
-    width: 99vw;
 }
 .nav {
 
-    width: 99vw;
+    padding: 15px;
+
     position: fixed;
     z-index: 1000;
     justify-content: space-between;
-    display: flex;
+    opacity: 75%;
+    background-color: #eacc9c;
+    right: 0;
+    top: 2px;
 }
 .links {
     display: flex;
   }
-  
-  .links a {
+
+  .nav a {
     margin-right: 20px; /* Adjust the margin as needed */
   }
   
   .logout {
     margin-left: auto; /* Move the logout button to the right */
   }
+
+.character-pic {
+    margin-left: 0px;
+    padding-left: 50px;
+    padding-right: 50px;
+    width: 50vw;
+    height: auto;
+    max-height: 600px;
+}
