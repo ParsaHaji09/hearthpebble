@@ -17,7 +17,7 @@ import Landing from "./Components/Pages/Landing";
 import EditDeck from "./Components/Pages/EditDeck";
 import Battlefield from "./Components/Pages/Battlefield";
 
-import background from "./Components/Pages/HomeAssets/forested_mountainbackground.png"
+
 
 function App() {
 
@@ -30,7 +30,7 @@ function App() {
 
   return (
     <>
-      <div style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover' }}>
+      <div >
         
           <Navbar />
           <Routes>

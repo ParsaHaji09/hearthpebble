@@ -6,6 +6,7 @@ import { CARDS2 } from '../options/cards';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import background from "./HomeAssets/forested_mountainbackground.png";
 
 const imagesCharacter = require.context('./HomeAssets/CharacterPics', true)
 const imageCharacterList = imagesCharacter.keys().map(image => imagesCharacter(image))
@@ -94,7 +95,7 @@ const Grid = (obj) => {
 
           <div className='Grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(5, 100px)', gap: '10px' }}>
                 {userCards.map((source, index) => (
-                  <img key={index} src={source} alt={`Image ${index + 1}`} style={{ width: '150px', height: 'auto', objectFit: 'cover' }} />
+                  <img key={index} src={source} alt={`Image ${index + 1}`} style={{ width: '130px', height: 'auto', objectFit: 'cover' }} />
                 ))}
           </div>
         </div>
@@ -157,15 +158,15 @@ const Home = () => {
     }
 
     return (
-        <div>
+        <div style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover' }}>
           {loading ? (
               // Display a loading indicator or message while data is being fetched
               <p>Loading...</p>
             ): (
-              <div className='home-body' style={{paddingTop: '75px', display: 'flex', flexDirection: 'row', paddingBottom: '20px'}}>
+              <div className='home-body' style={{paddingTop: '70px', display: 'flex', flexDirection: 'row', paddingBottom: '20px'}}>
 
-                  <div style={{display: 'flex', flexDirection: 'column'}}>
-                      <p style={{paddingLeft: '70px'}}>
+                  <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                      <p style={{paddingRight: '120px', paddingBottom: '20px'}}>
                           <span style={{backgroundColor: '#e1b86b', opacity: '90%'}}>
                             {userData.character}
                           </span>
@@ -175,16 +176,16 @@ const Home = () => {
 
                       <HorizontalButtonList onButtonClick={handleButtonClick} activeButtonIndex={activeButtonIndex}/>
                   </div>
-                  <div style={{paddingTop: '100px', paddingLeft:'100px'}}>
+                  <div style={{paddingTop: '100px', paddingLeft:'100px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                       <Grid deck={userData.deck}/>
                       <button onClick={handleClick} style={{backgroundColor: '#e1b86b', // Base color, adjust as needed
                           color: 'white', // Text color
                           fontSize: '20px', // Font size
                           fontWeight: 'bold', // Font weight
-                          padding: '15px 30px', // Padding for the button
+                          padding: '25px 30px', // Padding for the button
                           borderRadius: '10px', // Rounded corners
                           border: 'none', // Remove default border
-                          height: '50px',
+                          height: '75px',
                           boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)', // Shadow for depth
                           cursor: 'pointer', // Pointer cursor on hover
                           textTransform: 'uppercase', // Uppercase text

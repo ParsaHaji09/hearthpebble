@@ -42,11 +42,11 @@ function Navbar() {
         <nav className="nav">
 
 
-                <a href="/home" className="home"><HomeIcon/></a>
-                <a href="/battlelog" className="battlelog"><ReceiptLongIcon/></a>
-                <a href="/editdeck" className="editdeck"><StyleIcon/></a>
-                <a href="/profile" className="profile"><AccountCircleIcon/></a>
-                <button className="logout" onClick={handleClick} style={buttonStyle}><LogoutIcon/></button>
+            <a href="/home" className="home"><HomeIcon/></a>
+            <a href="/editdeck" className="editdeck"><StyleIcon/></a>
+            <a href="/battlelog" className="battlelog"><ReceiptLongIcon/></a>
+            <a href="/profile" className="profile"><AccountCircleIcon/></a>
+            <button className="logout" onClick={handleClick} style={buttonStyle}><LogoutIcon/></button>
 
         </nav>
     );
