@@ -5,14 +5,19 @@ import HomeIcon from '@mui/icons-material/Home';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import StyleIcon from '@mui/icons-material/Style';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useEffect } from 'react';
+import React, { useState } from 'react';
 
 function Navbar() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [profileName, setProfileName] = useState("") 
     const handleClick = () => {
         dispatch(logout());
         navigate('/landing')
+
     }
+
 
     const buttonStyle = {
         all: 'unset',       // Resets all default styles
@@ -21,16 +26,31 @@ function Navbar() {
         // justifyContent: 'center',
         //padding: '8px',
     };
+
+    useEffect(() => {
+        const prevData = localStorage.getItem("saveData");
+        if (!prevData) {
+            navigate('/login');
+        } else {
+            const parsedData = JSON.parse(prevData);
+            setProfileName(parsedData.username);
+        }
+        }, [navigate]);
+
     return (
         <nav className="nav">
             <a href="/home" className="sitename">
                 <span>Hearthpebble</span>
             </a>
             <div className="links">
+
                 <a href="/home" className="home"><HomeIcon/></a>
                 <a href="/battlelog" className="battlelog"><ReceiptLongIcon/></a>
                 <a href="/editdeck" className="editdeck"><StyleIcon/></a>
                 <button className="logout" onClick={handleClick} style = {buttonStyle}><LogoutIcon/></button>
+
+                <a href="/profile" className="profile">{profileName}</a>
+
             </div>
         </nav>
     );

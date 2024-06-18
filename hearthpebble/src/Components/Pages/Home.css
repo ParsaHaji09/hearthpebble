@@ -6,7 +6,7 @@
     box-sizing: border-box;
 }
 
-.home-body, .landing-body, .login-body, .register-body, .edituser-body, .editdeck-body {
+.home-body, .landing-body, .login-body, .register-body, .edituser-body, .editdeck-body, .battlefield-body {
     line-height: 1;
     padding-top: 50px;
 }

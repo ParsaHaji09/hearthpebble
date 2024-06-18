@@ -30,7 +30,7 @@ const Register = (props) => {
 
   return (
     <div className = "register-body">
-    <div className="auth-form-container">
+    
     <form className="login-form" onSubmit={handleSubmit}>
 
     <label htmlFor="username">Username</label>
@@ -42,7 +42,6 @@ const Register = (props) => {
     <button className="button" type="submit">Register</button>
     </form>
     <button className="link-btn" onClick={handleClick}> Already have an account? Log in here.</button>
-    </div>
     </div>
   );
 }
