@@ -85,25 +85,24 @@ const Battlefield = () => {
             <div className='battlefield-body'>
                 <h1>here at battle field</h1>
 
-                <Canvas colorManagement camera={{position: [0,0,-100], fov: 70}}>
+                <Canvas colorManagement camera={{position: [0,0,20], fov: 70}}>
                     <RoundedBox
-                        args={[5, 5, 5]} // Width, height, depth. Default is [1, 1, 1]
+                        args={[100, 100, 100]} // Width, height, depth. Default is [1, 1, 1]
                         radius={0.05} // Radius of the rounded corners. Default is 0.05
                         smoothness={4} // The number of curve segments. Default is 4
                         bevelSegments={4} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
                         creaseAngle={0.4} // Smooth normals everywhere except faces that meet at an angle greater than the crease angle
                     >
-                        <meshPhongMaterial color="#f3f3f3"  />
+                        <meshPhongMaterial color="#f3f3f3" />
                     </RoundedBox>
                 </Canvas>
 
-                <h1>{cardName}</h1>
-                <div className='Grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 3fr)', gap: '10px', padding: '20px' }}>
-                    {currentHand.map((source, index) => (
-                        <img key={index} onClick={() => handlePlayCard(source)} src={source} alt={`Image ${index + 1}`}style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    ))}
-                    
-                </div>
+                {/*<div className='Grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 3fr)', gap: '10px', padding: '20px' }}>*/}
+                {/*    {currentHand.map((source, index) => (*/}
+                {/*        <img key={index} onClick={() => handlePlayCard(source)} src={source} alt={`Image ${index + 1}`}style={{ width: '100%', height: '100%', objectFit: 'cover' }} />*/}
+                {/*    ))}*/}
+                {/*    */}
+                {/*</div>*/}
             </div>
             )}
         </div>

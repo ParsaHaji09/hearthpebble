@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 //import './Home.css';
-import { Link } from 'react-router-dom';
 import { CHARACTERS } from '../options/characters';
 import { CARDS2 } from '../options/cards';
 import { useEffect } from 'react';
@@ -32,13 +31,6 @@ const Button = ({ imageSrc, onClick, isActive }) => {
     </button>
   );
 };
-
-const editDeck = () => {
-  return (
-    <Link to="/profile"> Edit Deck </Link>
-  );
-};
-
 
 const HorizontalButtonList = ({ onButtonClick, activeButtonIndex }) => {
   const buttons = [
@@ -154,7 +146,7 @@ const Home = () => {
     };
 
     const handleClick = () => {
-      navigate('/battlefield')
+      navigate('/cardtable')
     }
 
     return (
@@ -176,7 +168,7 @@ const Home = () => {
 
                       <HorizontalButtonList onButtonClick={handleButtonClick} activeButtonIndex={activeButtonIndex}/>
                   </div>
-                  <div style={{paddingTop: '100px', paddingLeft:'100px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                  <div style={{paddingTop: '70px', paddingLeft:'100px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                       <Grid deck={userData.deck}/>
                       <button onClick={handleClick} style={{backgroundColor: '#e1b86b', // Base color, adjust as needed
                           color: 'white', // Text color
