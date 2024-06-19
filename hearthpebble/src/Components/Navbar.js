@@ -1,6 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { logout } from './actions/reduxActions';
+import HomeIcon from '@mui/icons-material/Home';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import StyleIcon from '@mui/icons-material/Style';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useEffect } from 'react';
 import React, { useState } from 'react';
 
@@ -14,6 +19,15 @@ function Navbar() {
 
     }
 
+
+    const buttonStyle = {
+        all: 'unset',       // Resets all default styles
+        display: 'inline-flex',  // Aligns items and centers them if needed
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        //padding: '8px',
+    };
+
     useEffect(() => {
         const prevData = localStorage.getItem("saveData");
         if (!prevData) {
@@ -23,19 +37,17 @@ function Navbar() {
             setProfileName(parsedData.username);
         }
         }, [navigate]);
-        
+
     return (
         <nav className="nav">
-            <a href="/home" className="sitename">
-                <span>Hearthpebble</span>
-            </a>
-            <div className="links">
-                <a href="/home" className="home">Home</a>
-                <a href="/battlelog" className="battlelog">Battle Log</a>
-                <a href="/editdeck" className="editdeck">Edit Deck</a>
-                <a href="/profile" className="profile">{profileName}</a>
-                <button onClick={handleClick}>Logout</button>
-            </div>
+
+
+            <a href="/home" className="home"><HomeIcon/></a>
+            <a href="/editdeck" className="editdeck"><StyleIcon/></a>
+            <a href="/battlelog" className="battlelog"><ReceiptLongIcon/></a>
+            <a href="/profile" className="profile"><AccountCircleIcon/></a>
+            <button className="logout" onClick={handleClick} style={buttonStyle}><LogoutIcon/></button>
+
         </nav>
     );
 }

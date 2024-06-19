@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import './Home.css';
-import { Link } from 'react-router-dom';
+//import './Home.css';
 import { CHARACTERS } from '../options/characters';
 import { CARDS2 } from '../options/cards';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import background from "./HomeAssets/forested_mountainbackground.png";
 
 const imagesCharacter = require.context('./HomeAssets/CharacterPics', true)
 const imageCharacterList = imagesCharacter.keys().map(image => imagesCharacter(image))
@@ -17,20 +17,22 @@ const imageCardlist = imagesCards.keys().map(image => imagesCards(image))
 const Button = ({ imageSrc, onClick, isActive }) => {
   return (
       <button onClick={onClick} style={{ border: 'none', background: 'transparent', padding: 0 }}>
-      <img src={imageSrc} alt="Button Image" style={{ width: '100px', height: '100px', opacity: isActive ? '50%' : '100%' }}
+      <img src={imageSrc} alt="Button Image"
+           style={{
+               width: '100px',
+               height: '100px',
+               opacity: isActive ? '50%' : '100%',
+               border: isActive ? '2px solid blue' : '2px solid gray',
+               cursor: 'pointer',
+               borderRadius: '50%',  // Makes the button rounded
+               // Example: changes border color if active
+            }}
       />
     </button>
   );
 };
 
-const editDeck = () => {
-  return (
-    <Link to="/profile"> Edit Deck </Link>
-  );
-};
-
-
-const VerticalButtonList = ({ onButtonClick, activeButtonIndex }) => {
+const HorizontalButtonList = ({ onButtonClick, activeButtonIndex }) => {
   const buttons = [
       { label: 'Button 1', imageSrc: imageCharacterList[0] },
       { label: 'Button 2', imageSrc: imageCharacterList[1] },
@@ -42,7 +44,7 @@ const VerticalButtonList = ({ onButtonClick, activeButtonIndex }) => {
 
   return (
     <div style={{display: 'flex'}}>
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
       {buttons.map((button, index) => (
         <Button
           key = {index}
@@ -52,6 +54,7 @@ const VerticalButtonList = ({ onButtonClick, activeButtonIndex }) => {
         />
       ))}
     </div>
+
     </div>
   );
 };
@@ -81,12 +84,10 @@ const Grid = (obj) => {
     return (
       <div>
         <div className='right-side'>
-          <Link to="/editdeck">
-            <button className="Edit Deck" onClick={editDeck} style={{ padding: '20px', placeContent: 'center', width: '320px' }}>Edit Deck</button>
-          </Link>
+
           <div className='Grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(5, 100px)', gap: '10px' }}>
                 {userCards.map((source, index) => (
-                  <img key={index} src={source} alt={`Image ${index + 1}`}style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img key={index} src={source} alt={`Image ${index + 1}`} style={{ width: '130px', height: 'auto', objectFit: 'cover' }} />
                 ))}
           </div>
         </div>
@@ -145,25 +146,47 @@ const Home = () => {
     };
 
     const handleClick = () => {
-      navigate('/battlefield')
+      navigate('/cardtable')
     }
+
     return (
-        <div>
+        <div style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover' }}>
           {loading ? (
               // Display a loading indicator or message while data is being fetched
               <p>Loading...</p>
             ): (
-              <div className= 'home-body' style={{ display: 'flex' }}>
-                <VerticalButtonList onButtonClick={handleButtonClick} activeButtonIndex={activeButtonIndex}/>
-                <img src={imageCharacterList[activeButtonIndex]} style={{ marginLeft: '0px', paddingLeft: '50px', paddingRight: '50px', width: '60vw', placeContent: 'left', height: '800px' }}/>
-                <div>
-                  <p>{userData.character}</p>
-                  <Grid deck = {userData.deck}/>
-                  <button onClick={handleClick}>Play Battle</button>
-                </div>
+              <div className='home-body' style={{paddingTop: '70px', display: 'flex', flexDirection: 'row', paddingBottom: '20px'}}>
+
+                  <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                      <p style={{paddingRight: '120px', paddingBottom: '20px'}}>
+                          <span style={{backgroundColor: '#e1b86b', opacity: '90%'}}>
+                            {userData.character}
+                          </span>
+                      </p>
+
+                      <img className='character-pic' src={imageCharacterList[activeButtonIndex]}/>
+
+                      <HorizontalButtonList onButtonClick={handleButtonClick} activeButtonIndex={activeButtonIndex}/>
+                  </div>
+                  <div style={{paddingTop: '70px', paddingLeft:'100px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                      <Grid deck={userData.deck}/>
+                      <button onClick={handleClick} style={{backgroundColor: '#e1b86b', // Base color, adjust as needed
+                          color: 'white', // Text color
+                          fontSize: '20px', // Font size
+                          fontWeight: 'bold', // Font weight
+                          padding: '25px 30px', // Padding for the button
+                          borderRadius: '10px', // Rounded corners
+                          border: 'none', // Remove default border
+                          height: '75px',
+                          boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)', // Shadow for depth
+                          cursor: 'pointer', // Pointer cursor on hover
+                          textTransform: 'uppercase', // Uppercase text
+                          letterSpacing: '1px', // Slight letter spacing
+                          textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)',}}>Play Battle</button>
+                  </div>
               </div>
-            )}
+          )}
         </div>
     );
-  };
+};
 export default Home;

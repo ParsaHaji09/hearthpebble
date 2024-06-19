@@ -16,6 +16,9 @@ import Navbar from "./Components/Navbar";
 import Landing from "./Components/Pages/Landing";
 import EditDeck from "./Components/Pages/EditDeck";
 import Battlefield from "./Components/Pages/Battlefield";
+import CardTable from "./Components/Pages/CardTable";
+
+
 
 function App() {
 
@@ -28,7 +31,7 @@ function App() {
 
   return (
     <>
-      <div>
+      <div >
         
           <Navbar />
           <Routes>
@@ -40,7 +43,8 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/battlelog" element={<Battlelog />} />
               <Route path="/battlefield" element={<Battlefield />} />
-              
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/cardtable" element={<CardTable />} />
               <Route path="*" element={<Navigate to="/"/>} />
           </Routes>
         
