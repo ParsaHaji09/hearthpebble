@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { login } from '../actions/reduxActions';
-import ErrorRedirect from './Error';
+import './Login.css'
 
 const Login = (props) => {
   const [username, setUsername] = useState('')
