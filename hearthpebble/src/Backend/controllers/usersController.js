@@ -17,8 +17,9 @@ const createNewUser = asyncHandler(async(req,res) => {
     // const hashPwd = await bcrypt.hash(password,10)
     const hashPwd = password
     const defaultCharacter = "Sir Gideon Stormblade"
+    const defaultCurrDeck = ["Divine Strike", "Guardians Shield", "Blade of Judgement", "Radiant Healing", "Storm of Vengeance"]
     const defaultGideonDeck = ["Divine Strike", "Guardians Shield", "Blade of Judgement", "Radiant Healing", "Storm of Vengeance"]
-    const defaultFrostbloomDeck = ["Frostbite","Icy Veil", "Glacial Surge","Blade of Judgement", "Winters Embrace", "Frostblooms Wrath"]
+    const defaultFrostbloomDeck = ["Frostbite","Icy Veil", "Glacial Surge","Blade of Judgement", "Winters Embrace"]
 
     const defaultLog = []
 
@@ -27,6 +28,7 @@ const createNewUser = asyncHandler(async(req,res) => {
             username,
             "password": hashPwd,
             "character": defaultCharacter,
+            "curr_deck": defaultCurrDeck,
             "gideon_deck": defaultGideonDeck,
             "frostbloom_deck": defaultFrostbloomDeck,
             "logBattles": defaultLog
