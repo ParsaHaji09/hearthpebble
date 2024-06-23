@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Grid from './HomeGrid';
 import background from "./HomeAssets/forested_mountainbackground.png";
-import {GIDEONCARDS, FROSTBLOOMCARDS} from "../options/cards";
+
 const imagesCharacters = require.context('./HomeAssets/CharacterPics', true)
 const imageCharacterList = imagesCharacters.keys().map(image => imagesCharacters(image))
 
@@ -80,12 +80,23 @@ const Home = () => {
       setActiveButtonIndex(index); 
       let characterIndex = "a" + index;
       let characterName = CHARACTERS[characterIndex];
-
+      let temp_deck = []
+      if (characterName === "Isolde Frostbloom"){
+          temp_deck = userData.frostbloom_deck;
+      }
+      else if (characterName === "Sir Gideon Stormblade"){
+          temp_deck = userData.gideon_deck;
+      }
+      else{
+          temp_deck = userData.gideon_deck;
+      }
       try {
-        const response = await axios.put(`http://localhost:5000/api/users/${userData._id}`,{
+
+          const response = await axios.put(`http://localhost:5000/api/users/${userData._id}`,{
           "id": userData._id,
           "username": userData.username,
           "character": characterName,
+          "curr_deck": temp_deck,
           "gideon_deck": userData.gideon_deck,
           "frostbloom_deck": userData.frostbloom_deck,
         })
@@ -121,7 +132,7 @@ const Home = () => {
                       <HorizontalButtonList onButtonClick={handleButtonClick} activeButtonIndex={activeButtonIndex}/>
                   </div>
                   <div style={{paddingTop: '70px', paddingLeft:'100px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                      <Grid deck={userData.deck} character={userData.character} />
+                      <Grid curr_deck={userData.curr_deck} character={userData.character} />
                       <button onClick={handleClick} style={{backgroundColor: '#e1b86b', // Base color, adjust as needed
                           color: 'white', // Text color
                           fontSize: '20px', // Font size
