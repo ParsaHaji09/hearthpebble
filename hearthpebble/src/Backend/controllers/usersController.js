@@ -19,7 +19,7 @@ const createNewUser = asyncHandler(async(req,res) => {
     const defaultCharacter = "Sir Gideon Stormblade"
     const defaultCurrDeck = ["Divine Strike", "Guardians Shield", "Blade of Judgement", "Radiant Healing", "Storm of Vengeance"]
     const defaultGideonDeck = ["Divine Strike", "Guardians Shield", "Blade of Judgement", "Radiant Healing", "Storm of Vengeance"]
-    const defaultFrostbloomDeck = ["Frostbite","Icy Veil", "Glacial Surge","Blade of Judgement", "Winters Embrace"]
+    const defaultFrostbloomDeck = ["Frostbite","Icy Veil", "Glacial Surge", "Winters Embrace", "Frostblooms Wrath"]
 
     const defaultLog = []
 
@@ -79,9 +79,9 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 const updateUser = asyncHandler(async(req,res) => {
-    const {id, username, character, deck} = req.body
+    const {id, username, character, curr_deck, gideon_deck, frostbloom_deck} = req.body
     //confirm data
-    if(!id || !username || !Array.isArray(deck) || !deck.length || !character){
+    if(!id || !username || !Array.isArray(curr_deck) || !curr_deck.length || !character){
         return res.status(400).json({message: 'All fields are required.'})
     }
     const user = await User.findById(req.params.id);
@@ -90,7 +90,9 @@ const updateUser = asyncHandler(async(req,res) => {
         return res.status(400).json({message: 'No user found.'})
     }
     user.character = character
-    user.deck = deck
+    user.curr_deck = curr_deck
+    user.gideon_deck = gideon_deck
+    user.frostbloom_deck = frostbloom_deck
     const updatedUser = await user.save()
     res.json(updatedUser)
 })

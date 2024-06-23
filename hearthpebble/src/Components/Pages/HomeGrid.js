@@ -6,7 +6,7 @@ const imagesFrostbloomCards = require.context('../../../public/Assets/Frostbloom
 
 const gideonImageList = imagesGideonCards.keys().map(image => imagesGideonCards(image));
 const frostbloomImageList = imagesFrostbloomCards.keys().map(image => imagesFrostbloomCards(image));
-const imageCardList = [...gideonImageList, ...frostbloomImageList];
+//const imageCardList = [...gideonImageList, ...frostbloomImageList];
 
 const Grid = (obj) => {
 
@@ -18,6 +18,8 @@ const Grid = (obj) => {
             chosenCharacterCardDeck = FROSTBLOOMCARDS
         }
 
+        console.log(obj.curr_deck)
+
         function findIndicesByValues(valueList) {
             const indices = []
             valueList.forEach(element => {
@@ -28,11 +30,18 @@ const Grid = (obj) => {
             });
             return indices;
         }
-        const correspondingIndexes = findIndicesByValues(obj.deck)
-        const correspondingCards = correspondingIndexes.map(index => imageCardList[index])
+        const correspondingIndexes = findIndicesByValues(obj.curr_deck)
+        let temp_list = []
+        if (obj.character === "Isolde Frostbloom"){
+            temp_list = frostbloomImageList;
+        }
+        else{
+            temp_list = gideonImageList;
+        }
+        const correspondingCards = correspondingIndexes.map(index => temp_list[index])
         setUserCards(correspondingCards)
 
-    }, [obj.character, obj.deck])
+    }, [obj.character, obj.curr_deck])
 
     return (
         <div>
