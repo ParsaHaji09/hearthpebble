@@ -13,14 +13,7 @@ const Button = ({ imageSrc, onClick, isActive }) => {
   return (
       <button onClick={onClick} style={{ border: 'none', background: 'transparent', padding: 0 }}>
       <img src={imageSrc} alt="Button Image"
-           style={{
-               width: '100px',
-               height: '100px',
-               opacity: isActive ? '50%' : '100%',
-               border: isActive ? '2px solid blue' : '2px solid gray',
-               cursor: 'pointer',
-               borderRadius: '50%',  // Makes the button rounded
-               // Example: changes border color if active
+           style={{width: '100px', height: '100px', opacity: isActive ? '50%' : '100%', border: isActive ? '2px solid blue' : '2px solid gray', cursor: 'pointer', borderRadius: '50%',
             }}
       />
     </button>
@@ -93,7 +86,8 @@ const Home = () => {
           "id": userData._id,
           "username": userData.username,
           "character": characterName,
-          "deck": userData.deck
+          "gideon_deck": userData.gideon_deck,
+          "frostbloom_deck": userData.frostbloom_deck,
         })
         setUserData(response.data);
         

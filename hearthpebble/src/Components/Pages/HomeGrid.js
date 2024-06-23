@@ -29,7 +29,6 @@ const Grid = (obj) => {
             return indices;
         }
         const correspondingIndexes = findIndicesByValues(obj.deck)
-        console.log(correspondingIndexes)
         const correspondingCards = correspondingIndexes.map(index => imageCardList[index])
         setUserCards(correspondingCards)
 
