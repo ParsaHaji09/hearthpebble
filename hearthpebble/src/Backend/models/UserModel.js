@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    curr_deck: [{
+        type: String,
+        default: "Card 1"
+    }],
     gideon_deck: [{
         type: String,
         default: "Card 1"

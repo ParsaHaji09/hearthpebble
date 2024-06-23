@@ -46,6 +46,7 @@ const verifyUser = asyncHandler(async(req,res) => {
         res.json({
             _id: user._id,
             username: user.username,
+            curr_deck: user.curr_deck,
             gideon_deck: user.gideon_deck,
             frostbloom_deck: user.frostbloom_deck,
             character: user.character,
