@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
-//import './Home.css';
 import { CHARACTERS } from '../options/characters';
-import { CARDS2 } from '../options/cards';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Grid from './HomeGrid';
 import background from "./HomeAssets/forested_mountainbackground.png";
-
-const imagesCharacter = require.context('./HomeAssets/CharacterPics', true)
-const imageCharacterList = imagesCharacter.keys().map(image => imagesCharacter(image))
-
-const imagesCards = require.context('./HomeAssets/CardPics', true)
-const imageCardlist = imagesCards.keys().map(image => imagesCards(image))
-
+import {GIDEONCARDS, FROSTBLOOMCARDS} from "../options/cards";
+const imagesCharacters = require.context('./HomeAssets/CharacterPics', true)
+const imageCharacterList = imagesCharacters.keys().map(image => imagesCharacters(image))
 
 const Button = ({ imageSrc, onClick, isActive }) => {
   return (
@@ -59,44 +54,6 @@ const HorizontalButtonList = ({ onButtonClick, activeButtonIndex }) => {
   );
 };
   
-const Grid = (obj) => {
-  
-  const [userCards, setUserCards] = useState([]);
-
-  useEffect(() => {
-    function findIndicesByValues(valueList) {
-      const indices = []
-      valueList.forEach(element => {
-        const index = CARDS2.indexOf(element)
-        if(index !== -1){
-          indices.push(index)
-        }
-      });
-      return indices;
-    }
-    const correspondingIndexes = findIndicesByValues(obj.deck)
-    console.log(correspondingIndexes)
-    const correspondingCards = correspondingIndexes.map(index => imageCardlist[index])
-    
-    setUserCards(correspondingCards)
-  }, [obj.deck])
-
-    return (
-      <div>
-        <div className='right-side'>
-
-          <div className='Grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(5, 100px)', gap: '10px' }}>
-                {userCards.map((source, index) => (
-                  <img key={index} src={source} alt={`Image ${index + 1}`} style={{ width: '130px', height: 'auto', objectFit: 'cover' }} />
-                ))}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-
-  
 const Home = () => {
     const [loading, setLoading] = useState(true); 
     const [userData, setUserData] = useState({});
@@ -110,7 +67,6 @@ const Home = () => {
       } else {
         const parsedData = JSON.parse(prevData);
         getUser(parsedData._id);
-        
       }
     }, [navigate]);
   
@@ -129,12 +85,14 @@ const Home = () => {
 
     const handleButtonClick = async(index) => { 
       setActiveButtonIndex(index); 
-      let characterIndex = "a" + index
+      let characterIndex = "a" + index;
+      let characterName = CHARACTERS[characterIndex];
+
       try {
         const response = await axios.put(`http://localhost:5000/api/users/${userData._id}`,{
           "id": userData._id,
           "username": userData.username,
-          "character": CHARACTERS[characterIndex],
+          "character": characterName,
           "deck": userData.deck
         })
         setUserData(response.data);
@@ -169,7 +127,7 @@ const Home = () => {
                       <HorizontalButtonList onButtonClick={handleButtonClick} activeButtonIndex={activeButtonIndex}/>
                   </div>
                   <div style={{paddingTop: '70px', paddingLeft:'100px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                      <Grid deck={userData.deck}/>
+                      <Grid deck={userData.deck} character={userData.character} />
                       <button onClick={handleClick} style={{backgroundColor: '#e1b86b', // Base color, adjust as needed
                           color: 'white', // Text color
                           fontSize: '20px', // Font size

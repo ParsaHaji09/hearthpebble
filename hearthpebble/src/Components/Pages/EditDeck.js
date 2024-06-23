@@ -3,24 +3,28 @@ import axios from 'axios'
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import { CARDS2 } from '../options/cards';
+import {GIDEONCARDS, FROSTBLOOMCARDS} from "../options/cards";
 
-const imagesCards = require.context('./HomeAssets/CardPics', true)
-const imagesCardsList = imagesCards.keys().map(image => imagesCards(image))
+const imagesGideonCards = require.context('../../../public/Assets/GideonCards', true)
+const imagesFrostbloomCards = require.context('../../../public/Assets/FrostbloomCards', true)
+
+const gideonImageList = imagesGideonCards.keys().map(image => imagesGideonCards(image));
+const frostbloomImageList = imagesFrostbloomCards.keys().map(image => imagesFrostbloomCards(image));
+const imageCardList = [...gideonImageList, ...frostbloomImageList];
 
 
-function EditDeck() {
+const EditDeck = () => {
     
     const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState({});
     const navigate = useNavigate();
     const [userCards, setUserCards] = useState([]);
-    const [allCards, setAllCards] = useState(imagesCardsList);
+    const [allCards, setAllCards] = useState(imageCardList);
 
     function findIndicesByValues(valueList) {
       const indices = []
       valueList.forEach(element => {
-        const index = CARDS2.indexOf(element)
+        const index = GIDEONCARDS.indexOf(element)
         if(index !== -1){
           indices.push(index)
         }
@@ -34,7 +38,7 @@ function EditDeck() {
             setUserData(response.data);
             findIndicesByValues(response.data.deck)
             const correspondingIndexes = findIndicesByValues(response.data.deck)
-            const correspondingCards = correspondingIndexes.map(index => imagesCardsList[index])
+            const correspondingCards = correspondingIndexes.map(index => imageCardList[index])
             setUserCards(correspondingCards)
             setAllCards(allCards.filter(card => !correspondingCards.includes(card)))
         } catch (error) {
@@ -58,11 +62,11 @@ function EditDeck() {
     
     const handleSave = async () => {
             function mapCardsToIndices(correspondingCards) {
-                return correspondingCards.map(card => imagesCardsList.indexOf(card)).filter(index => index !== -1);
+                return correspondingCards.map(card => imageCardList.indexOf(card)).filter(index => index !== -1);
             }
           // Function to find values by keys
             function findValuesByIndex(indexList) {
-                return indexList.map(key => CARDS2[key]).filter(Boolean); // Using filter(Boolean) to remove any undefined values
+                return indexList.map(key => GIDEONCARDS[key]).filter(Boolean); // Using filter(Boolean) to remove any undefined values
             }
           console.log(userCards)
           const indices = mapCardsToIndices(userCards)
