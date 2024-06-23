@@ -53,28 +53,6 @@ const Battlefield = () => {
             setCardName(cardname)
         })
     };
-    const cardData = [
-        {
-            position: [0, 0, 0],  // Center of the scene
-            rotation: [0, 0, 0],  // No rotation
-            texture: './HomeAssets/CardPics/Gideon\'s Valor (0).png'  // Path to the texture
-        },
-        {
-            position: [2, 0, 0],  // Positioned 2 units to the right
-            rotation: [0, Math.PI / 4, 0],  // Rotated 45 degrees around the Y axis
-            texture: './HomeAssets/CardPics/Gideon\'s Valor (0).png'
-        },
-        {
-            position: [-2, 0, 0],  // Positioned 2 units to the left
-            rotation: [0, -Math.PI / 4, 0],  // Rotated -45 degrees around the Y axis
-            texture: './HomeAssets/CardPics/Gideon\'s Valor (0).png'
-        },
-        {
-            position: [0, 0, 2],  // Positioned 2 units forward
-            rotation: [Math.PI / 6, 0, 0],  // Rotated 30 degrees around the X axis
-            texture: './HomeAssets/CardPics/Gideon\'s Valor (0).png'
-        }
-    ];
 
     return (
         <div>

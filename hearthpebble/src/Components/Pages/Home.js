@@ -106,7 +106,7 @@ const Home = () => {
     useEffect(() => {
       const prevData = localStorage.getItem("saveData");
       if (!prevData) {
-        navigate('/login');
+       // navigate('/login');
       } else {
         const parsedData = JSON.parse(prevData);
         getUser(parsedData._id);

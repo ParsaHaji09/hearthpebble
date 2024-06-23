@@ -22,11 +22,11 @@ import CardTable from "./Components/Pages/CardTable";
 
 function App() {
 
-  const [currentForm, setCurrentForm] = useState("login");
+  // const [currentForm, setCurrentForm] = useState("login");
   
-  useEffect(() => {
+  // useEffect(() => {
 
-  }, [currentForm])
+  // }, [currentForm])
 
 
   return (
@@ -38,7 +38,6 @@ function App() {
               <Route path="/" element={<Landing />} />
               <Route path="/editdeck" element={<EditDeck />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<RegisterForm />} />
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/battlelog" element={<Battlelog />} />

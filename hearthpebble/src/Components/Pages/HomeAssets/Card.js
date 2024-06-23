@@ -7,51 +7,26 @@ import {
     Vector3
 } from 'three';
 
-import * as THREE from 'three';
-
 const textureLoader = new TextureLoader();
 const cardGeo = new BoxGeometry(0.4, 0.6, 0.001);
 
-// const citizen1Texture = textureLoader.load('./CardPics/gid20.png');
-// citizen1Texture.colorSpace = SRGBColorSpace;
+const frontCardTexture = textureLoader.load( "/Assets/Gideon1.png" );
+frontCardTexture.colorSpace = SRGBColorSpace;
 
-// const citizen1Texture = textureLoader.load("CardPics/gid20.png", function(texture) {
-//     texture.colorSpace = THREE.SRGBColorSpace;
-// });
-
-const citizen1Texture = textureLoader.load( "/gid19.png" );
-citizen1Texture.colorSpace = SRGBColorSpace;
-
-const coverTexture = textureLoader.load('./CardPics/gid19.png');
+const coverTexture = textureLoader.load('/Assets/cardback.png');
 coverTexture.colorSpace = SRGBColorSpace;
-
-/* Test code*/
-
-const canvas = document.createElement('canvas');
-canvas.width = 256; // Set the desired width
-canvas.height = 256; // Set the desired height
-
-// Get the 2D context of the canvas
-const context = canvas.getContext('2d');
-
-// Fill the canvas with red color
-context.fillStyle = 'red';
-context.fillRect(0, 0, canvas.width, canvas.height);
-
-// Create a texture from the canvas
-const redTexture = new THREE.CanvasTexture(canvas);
-redTexture.colorSpace = THREE.SRGBColorSpace;
 
 const card1Mat = [
     new MeshBasicMaterial(),
     new MeshBasicMaterial(),
     new MeshBasicMaterial(),
     new MeshBasicMaterial(),
-    new MeshBasicMaterial({map: citizen1Texture}),
-    new MeshBasicMaterial({map: redTexture})
+    new MeshBasicMaterial({map: frontCardTexture}),
+    new MeshBasicMaterial({map: coverTexture})
 ];
 
 const CARDS = [];
+const OPPCARDS = [];
 
 const myCardsPositions = [
     new Vector3(0.5, 6.004, 4.21),
@@ -77,6 +52,16 @@ function configureCard(card, pos, rot, rNumb, name) {
     pos.splice(rNumb, 1);
     rot.splice(rNumb, 1);
     CARDS.push(card);
+}
+
+function configureOppCard(card, pos, rot, rNumb, name) {
+    card.name = name;
+    card.castShadow = true;
+    card.position.copy(pos[rNumb]);
+    card.rotation.set(rot[rNumb].x, rot[rNumb].y, rot[rNumb].z);
+    pos.splice(rNumb, 1);
+    rot.splice(rNumb, 1);
+    OPPCARDS.push(card);
 }
 
 const minimum = 0;
@@ -126,26 +111,26 @@ let maximum2 = opponentCardsPositions.length - 1;
 let randomNumber2 = Math.floor(Math.random() * (maximum2 - minimum + 1)) + minimum;;
 
 const card6 = new Mesh(cardGeo, card1Mat);
-configureCard(card6, opponentCardsPositions, opponentCardsRotations, randomNumber2, 'slave');
+configureOppCard(card6, opponentCardsPositions, opponentCardsRotations, randomNumber2, 'slave');
 
 const card7 = new Mesh(cardGeo, card1Mat);
 maximum2 = opponentCardsPositions.length - 1;
 randomNumber2 = Math.floor(Math.random() * (maximum2 - minimum + 1)) + minimum;
-configureCard(card7, opponentCardsPositions, opponentCardsRotations, randomNumber2, 'citizen');
+configureOppCard(card7, opponentCardsPositions, opponentCardsRotations, randomNumber2, 'citizen');
 
 const card8 = new Mesh(cardGeo, card1Mat);
 maximum2 = opponentCardsPositions.length - 1;
 randomNumber2 = Math.floor(Math.random() * (maximum2 - minimum + 1)) + minimum;
-configureCard(card8, opponentCardsPositions, opponentCardsRotations, randomNumber2, 'citizen');
+configureOppCard(card8, opponentCardsPositions, opponentCardsRotations, randomNumber2, 'citizen');
 
 const card9 = new Mesh(cardGeo, card1Mat);
 maximum2 = opponentCardsPositions.length - 1;
 randomNumber2 = Math.floor(Math.random() * (maximum2 - minimum + 1)) + minimum;
-configureCard(card9, opponentCardsPositions, opponentCardsRotations, randomNumber2, 'citizen');
+configureOppCard(card9, opponentCardsPositions, opponentCardsRotations, randomNumber2, 'citizen');
 
 const card10 = new Mesh(cardGeo, card1Mat);
 maximum2 = opponentCardsPositions.length - 1;
 randomNumber2 = Math.floor(Math.random() * (maximum2 - minimum + 1)) + minimum;
-configureCard(card10, opponentCardsPositions, opponentCardsRotations, randomNumber2, 'citizen');
+configureOppCard(card10, opponentCardsPositions, opponentCardsRotations, randomNumber2, 'citizen');
 
-export {CARDS}
+export {CARDS, OPPCARDS}
