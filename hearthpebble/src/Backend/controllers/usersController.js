@@ -17,10 +17,20 @@ const createNewUser = asyncHandler(async(req,res) => {
     // const hashPwd = await bcrypt.hash(password,10)
     const hashPwd = password
     const defaultCharacter = "Sir Gideon Stormblade"
-    const defaultDeck = ["Gideon's Valor", 'Stormbreaker', 'Knight\'s Rally', 'Gideon\'s Shieldwall', 'Thunderstrike']
+    const defaultGideonDeck = ["Divine Strike", "Guardians Shield", "Blade of Judgement", "Radiant Healing", "Storm of Vengeance"]
+    const defaultFrostbloomDeck = ["Frostbite","Icy Veil", "Glacial Surge","Blade of Judgement", "Winters Embrace", "Frostblooms Wrath"]
+
     const defaultLog = []
 
-    const userObject = {username, "password": hashPwd, "character": defaultCharacter, "deck": defaultDeck, "logBattles": defaultLog}  // token and _id?
+    const userObject =
+        {
+            username,
+            "password": hashPwd,
+            "character": defaultCharacter,
+            "gideon_deck": defaultGideonDeck,
+            "frostbloom_deck": defaultFrostbloomDeck,
+            "logBattles": defaultLog
+        }  // token and _id?
     const user = await User.create(userObject)
     if (user) {
         res.status(201).json({message: `New user ${username} created`})
@@ -36,7 +46,8 @@ const verifyUser = asyncHandler(async(req,res) => {
         res.json({
             _id: user._id,
             username: user.username,
-            deck: user.deck,
+            gideon_deck: user.gideon_deck,
+            frostbloom_deck: user.frostbloom_deck,
             character: user.character,
             logBattles: user.logBattles
         })
