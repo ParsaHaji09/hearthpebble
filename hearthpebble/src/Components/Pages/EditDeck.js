@@ -131,13 +131,29 @@ const EditDeck = () => {
         <p>Loading...</p>
       ) : (
         <div className="editdeck-body" style={{ display: 'flex' }}>
-          <div className='Grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 3fr)', gridTemplateRows: 'repeat(5, 200px)', gap: '10px', padding: '20px' }}>
+          <div className='Grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(5, 200px)', gap: '10px', padding: '20px', position: 'relative' }}>
             {userCards.map((source, index) => (
               <img key={index} onClick={() => handleTakeoutImageClick(source)} src={source} alt={`Image ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             ))}
-            <button onClick={handleSave}>Save Changes</button>
+            <div style={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
+              <button onClick={handleSave} style={{
+                backgroundColor: '#e1b86b',
+                color: 'white',
+                fontSize: '20px',
+                fontWeight: 'bold',
+                padding: '25px 30px',
+                borderRadius: '10px',
+                border: 'none',
+                height: '75px',
+                boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)',
+                cursor: 'pointer',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)',
+              }}>Save Changes</button>
+            </div>
           </div>
-          <div className='Grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 3fr)', gridTemplateRows: 'repeat(10, 200px)', gap: '10px', padding: '20px' }}>
+          <div className='Grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(10, 200px)', gap: '10px', padding: '20px' }}>
             {allCards.map((source, index) => (
               <img key={index} onClick={() => handleImageClick(source)} src={source} alt={`Image ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             ))}
