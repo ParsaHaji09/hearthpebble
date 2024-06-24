@@ -7,21 +7,101 @@ import {
     Vector3
 } from 'three';
 
+import {GIDEONCARDS, FROSTBLOOMCARDS} from "../../options/cards";
+
+const imagesGideonCards = require.context('../../../../public/Assets/GideonCards', true)
+const imagesFrostbloomCards = require.context('../../../../public/Assets/FrostbloomCards', true)
+
+const gideonImageList = imagesGideonCards.keys().map(image => imagesGideonCards(image));
+const frostbloomImageList = imagesFrostbloomCards.keys().map(image => imagesFrostbloomCards(image));
+
+const data = JSON.parse(localStorage.getItem("saveData")) || {};
+const currDeck = data.curr_deck || [];
+const character = data.character || [];
+
+let chosenCharacterCardDeck = GIDEONCARDS
+if (character === "Isolde Frostbloom"){
+    chosenCharacterCardDeck = FROSTBLOOMCARDS
+}
+
+function findIndicesByValues(valueList) {
+    console.log(valueList);
+    const indices = []
+    valueList.forEach(element => {
+        const index = chosenCharacterCardDeck.indexOf(element)
+        if(index !== -1){
+            indices.push(index)
+        }
+    });
+    return indices;
+}
+const correspondingIndexes = findIndicesByValues(currDeck)
+
 const textureLoader = new TextureLoader();
 const cardGeo = new BoxGeometry(0.4, 0.6, 0.001);
 
-const frontCardTexture = textureLoader.load( "/Assets/Gideon1.png" );
-frontCardTexture.colorSpace = SRGBColorSpace;
+const frontCard1Texture = textureLoader.load( gideonImageList[correspondingIndexes[0]] );
+frontCard1Texture.colorSpace = SRGBColorSpace;
+
+const frontCard2Texture = textureLoader.load( gideonImageList[correspondingIndexes[1]] );
+frontCard2Texture.colorSpace = SRGBColorSpace;
+
+const frontCard3Texture = textureLoader.load( gideonImageList[correspondingIndexes[2]] );
+frontCard3Texture.colorSpace = SRGBColorSpace;
+
+const frontCard4Texture = textureLoader.load( gideonImageList[correspondingIndexes[3]] );
+frontCard4Texture.colorSpace = SRGBColorSpace;
+
+const frontCard5Texture = textureLoader.load( gideonImageList[correspondingIndexes[4]] );
+frontCard5Texture.colorSpace = SRGBColorSpace;
 
 const coverTexture = textureLoader.load('/Assets/cardback.png');
 coverTexture.colorSpace = SRGBColorSpace;
+
+
 
 const card1Mat = [
     new MeshBasicMaterial(),
     new MeshBasicMaterial(),
     new MeshBasicMaterial(),
     new MeshBasicMaterial(),
-    new MeshBasicMaterial({map: frontCardTexture}),
+    new MeshBasicMaterial({map: frontCard1Texture}),
+    new MeshBasicMaterial({map: coverTexture})
+];
+
+const card2Mat = [
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial({map: frontCard2Texture}),
+    new MeshBasicMaterial({map: coverTexture})
+];
+
+const card3Mat = [
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial({map: frontCard3Texture}),
+    new MeshBasicMaterial({map: coverTexture})
+];
+
+const card4Mat = [
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial({map: frontCard4Texture}),
+    new MeshBasicMaterial({map: coverTexture})
+];
+
+const card5Mat = [
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial(),
+    new MeshBasicMaterial({map: frontCard5Texture}),
     new MeshBasicMaterial({map: coverTexture})
 ];
 
@@ -71,22 +151,22 @@ let randomNumber1 = Math.floor(Math.random() * (maximum1 - minimum + 1)) + minim
 const card1 = new Mesh(cardGeo, card1Mat);
 configureCard(card1, myCardsPositions, myCardsRotations, randomNumber1, 'hand playerCard1 emperor');
 
-const card2 = new Mesh(cardGeo, card1Mat);
+const card2 = new Mesh(cardGeo, card2Mat);
 maximum1 = myCardsPositions.length - 1;
 randomNumber1 = Math.floor(Math.random() * (maximum1 - minimum + 1)) + minimum;
 configureCard(card2, myCardsPositions, myCardsRotations, randomNumber1, 'hand playerCard2 citizen');
 
-const card3 = new Mesh(cardGeo, card1Mat);
+const card3 = new Mesh(cardGeo, card3Mat);
 maximum1 = myCardsPositions.length - 1;
 randomNumber1 = Math.floor(Math.random() * (maximum1 - minimum + 1)) + minimum;
 configureCard(card3, myCardsPositions, myCardsRotations, randomNumber1, 'hand playerCard3 citizen');
 
-const card4 = new Mesh(cardGeo, card1Mat);
+const card4 = new Mesh(cardGeo, card4Mat);
 maximum1 = myCardsPositions.length - 1;
 randomNumber1 = Math.floor(Math.random() * (maximum1 - minimum + 1)) + minimum;
 configureCard(card4, myCardsPositions, myCardsRotations, randomNumber1, 'hand playerCard4 citizen');
 
-const card5 = new Mesh(cardGeo, card1Mat);
+const card5 = new Mesh(cardGeo, card5Mat);
 maximum1 = myCardsPositions.length - 1;
 randomNumber1 = Math.floor(Math.random() * (maximum1 - minimum + 1)) + minimum;
 configureCard(card5, myCardsPositions, myCardsRotations, randomNumber1, 'hand playerCard5 citizen');

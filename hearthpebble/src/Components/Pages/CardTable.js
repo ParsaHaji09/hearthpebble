@@ -11,15 +11,6 @@ const ThreeScene = () => {
     const [model, setModel] = useState(null);
     const xRef = useRef(-2);
 
-    const [prevData, setPrevData] = useState(null);
-
-    useEffect(() => {
-        const data = localStorage.getItem("saveData");
-        if (data) {
-            setPrevData(JSON.parse(data));
-        }
-    }, []);
-
     useEffect(() => {
         if (!mountRef.current) return;
         
