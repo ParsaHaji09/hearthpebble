@@ -3,46 +3,65 @@ import { useDispatch } from 'react-redux';
 import { register } from '../actions/reduxActions';
 import './Register.css'
 
-
 const Register = ({ show, onClose }) => {
+  
 
-  const [password, setPassword] = useState('');
-  const [username, setUserName] = useState('');
-
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordC, setPasswordC] = useState('')
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     console.log(username, password);
-    console.log('Register component submitted with username:', username);
-    dispatch(register(username, password));
-    onClose();
+    if (password !== passwordC) {
+      console.log("mismatch")
+    }
+    else {
+      dispatch(register(username, password));
+    }
   }
-  if (!show) {
-    return null;
-  }
+  
+  if (!show) return null;
+
   return (
-      <div className="modal-overlay">
-      <div className="register-body">
-        <button className="close-button" onClick={onClose}>
-          &times;
-        </button>
-        <form className="register-form" onSubmit={handleSubmit}>
+    <div className="modal-overlay">
+      <div className="modal-content">
+        {/* Left Side */}
+        <div className="modal-left">
+          <h1>Welcome to HearthPebble</h1>
+          <p>Your journey starts here. Create your account to get started!</p>
+        </div>
 
-          <label htmlFor="username">Username</label>
-          <input value={username} onChange={(e) => setUserName(e.target.value)} username="username" id="name"
-                 placeholder="Enter here" required/>
+        {/* Right Side */}
+        <div className="modal-right">
+          <h2>Register</h2>
+          <form onSubmit={handleSubmit} className="register-form">
+            <label htmlFor="username">Username</label>
+            <input type="text" id="username" onChange={(e) => setUsername(e.target.value)} placeholder="Enter your username" />
 
-          <label htmlFor="password">Password</label>
-          <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="********"
-                 id="password" name="password"/>
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" />
 
-          <button className="button" type="submit">Register</button>
-        </form>
-        <button className="link-btn" onClick={onClose}> Already have an account? Log in here.</button>
-      </div></div>
+            <label htmlFor="confirm-password">Confirm Password</label>
+            <input
+              type="password"
+              id="confirm-password"
+              onChange={(e) => setPasswordC(e.target.value)}
+              placeholder="Confirm your password"
+            />
+
+            <button type="submit" className="register-btn">
+              Register
+            </button>
+          </form>
+          <button className="close-btn" onClick={onClose}>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
   );
-}
+};
 
 export default Register;

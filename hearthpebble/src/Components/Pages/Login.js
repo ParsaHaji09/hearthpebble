@@ -50,9 +50,11 @@ const Login = (props) => {
   }
 
   return (
+      <div>  
+      <Register show={showRegister} onClose={handleCloseRegister} />
       <div className = 'login-body'>
-          <h1>Login</h1>
-          <Register show={showRegister} onClose={handleCloseRegister} />
+          {/* <h1>Welcome</h1> */}
+          
           <form className='auth-login' onSubmit={handleSubmit}>
               <label htmlFor ="username">Username</label>
               <input 
@@ -80,6 +82,9 @@ const Login = (props) => {
               <button className="button" type="submit">Log In</button>
           </form>
           <button className="link-btn" onClick={handleOpenRegister}> Don't have an account? Register here.</button>
+      </div>
+
+
       </div>
     );
 }

@@ -11,7 +11,7 @@ export const login = (username, password) => async (dispatch) => {
             }
           };
           
-          const { data } = await axios.post('http://localhost:5000/api/users/login', {
+          const { data } = await axios.post('http://localhost:5001/api/users/login', {
             username: username, 
             password: password,
           }, config);
@@ -37,7 +37,7 @@ export const register = (username, password) => async (dispatch) => {
       },
     };
 
-    const regData = await axios.post("http://localhost:5000/api/users/", {
+    const regData = await axios.post("http://localhost:5001/api/users/", {
       username: username,
       password: password,
     }, config);

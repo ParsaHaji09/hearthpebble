@@ -1,86 +1,116 @@
+/* Modal Overlay */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.register-body {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 400px;
-    max-width: 90%;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    position: relative;
+    z-index: 1000;
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    display: flex;
+    max-width: 800px;
+    width: 90%;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Left Section */
+  .modal-left {
+    background-color: #ff4d4d;
+    color: #fff;
+    padding: 40px;
+    flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-}
-
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    background: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.register-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.register-form label {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.register-form input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-.button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-top: 15px;
-}
-
-.button:hover {
-    background-color: #0056b3;
-}
-
-.link-btn {
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-    margin-top: 10px;
-    text-decoration: underline;
-}
-
-.link-btn:hover {
-    color: #0056b3;
-}
-
-.register-form label {
+    text-align: center;
+  }
+  
+  .modal-left h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+  
+  .modal-left p {
+    font-size: 0.6em;
+    line-height: 1.5;
+  }
+  
+  /* Right Section */
+  .modal-right {
+    flex: 1;
+    padding: 40px;
+  }
+  
+  .modal-right h2 {
+    margin-bottom: 20px;
+    font-size: 1.3em;
+    color: #333;
+  }
+  
+  .register-form label {
     display: block;
     margin-bottom: 8px;
     color: #666;
-}
+    font-weight: 500;
+    font-size: 0.6em;
+  }
+  
+  .register-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.4em;
+    box-sizing: border-box;
+  }
+  
+  .register-form input:focus {
+    outline: none;
+    border-color: #ff4d4d;
+    box-shadow: 0 0 5px rgba(255, 77, 77, 0.5);
+  }
+  
+  .register-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.6em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .register-btn:hover {
+    background-color: #e03e3e;
+  }
+  
+  .close-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #666;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .close-btn:hover {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  

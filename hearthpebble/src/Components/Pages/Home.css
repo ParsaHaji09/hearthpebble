@@ -39,11 +39,11 @@ html {
     left: 0;
 }
 
-body {
+/* body {
     color: whitesmoke;
     display: grid;
     place-content: left;
-}
+} */
 .nav {
 
     padding: 15px;

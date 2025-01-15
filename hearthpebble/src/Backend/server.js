@@ -1,49 +1,42 @@
-const express = require('express')
-const dotenv = require('dotenv')
-const app = express()
-const path = require('path')
-const PORT = process.env.PORT || 5000
+const express = require('express');
+const dotenv = require('dotenv');
+const path = require('path');
 const cors = require('cors');
-
-const connectDB = require("./config/db")
+const connectDB = require("./config/db");
 const userRoutes = require('./routes/userRoutes');
-
 const { notFound, errorHandler } = require('./middleware/errorHandler');
+
+const app = express();
+const PORT = process.env.PORT || 5001;
 
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 connectDB();
+
+// CORS Middleware must be before route definitions
+const corsOptions = {
+  origin: 'http://localhost:3000', // Frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+  credentials: true, // Allow cookies or authentication headers
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+};
+
+app.use(cors(corsOptions)); // Apply CORS
+app.options('*', cors(corsOptions)); // Preflight handling for all routes
+
+// Body parsing middleware
 app.use(express.json());
 
-app.use(cors({
-    origin: 'http://localhost:3000',  // Change this to the origin of your React app
-    credentials: true,
-  }));
-  
-
+// Routes
 app.get('/', (req, res) => {
-    res.send("API is running...");
-})
+  res.send("API is running...");
+});
+app.use('/api/users', userRoutes); // Your user routes
 
-// user opps
-app.use('/api/users', userRoutes);
-
-// errors
+// Error handlers
 app.use(notFound);
 app.use(errorHandler);
 
-const io = require('socket.io') (4000, {
-  cors: {
-    origin: ['http://localhost:3000']
-  }
-})
-io.on('connection', socket => {
-  console.log(`user is here: ${socket.id}`)
-
-  socket.on("play-card", cardname => {
-    console.log(cardname)
-    io.emit("receive-card", cardname)
-  })
-})
-
-
-app.listen(PORT, console.log(`Server started on PORT ${PORT}`))
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
